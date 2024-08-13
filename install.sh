@@ -84,25 +84,25 @@ chpwd() {
     local dir_name=$(basename "$PWD")
     
     case "$dir_name" in
-        "Pictures")
+        "Pictures"|"Imagens")
             local banner_dir="$BANNER_PICTURES_DIR"
             ;;
-        "Documents")
+        "Documents"|"Documentos")
             local banner_dir="$BANNER_DOCUMENTS_DIR"
             ;;
         "Downloads")
             local banner_dir="$BANNER_DOWNLOADS_DIR"
             ;;
-        "Templates")
+        "Templates"|"Modelos")
             local banner_dir="$BANNER_TEMPLATES_DIR"
             ;;
-        "Music")
+        "Music"|"Música")
             local banner_dir="$BANNER_MUSIC_DIR"
             ;;
-        "Videos")
+        "Videos"|"Vídeos")
             local banner_dir="$BANNER_VIDEOS_DIR"
             ;;
-        "Public")
+        "Public"|"Público")
             local banner_dir="$BANNER_PUBLIC_DIR"
             ;;
         *)
@@ -124,6 +124,7 @@ case "$SHELL_NAME" in
         ;;
     bash)
         PROMPT_COMMAND="chpwd; $PROMPT_COMMAND"
+        export PROMPT_COMMAND
         ;;
     fish)
         function fish_prompt
