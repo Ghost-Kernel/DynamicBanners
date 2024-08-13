@@ -4,7 +4,7 @@
 function show_banner() {
     echo "┬┌┐┌┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌"
     echo "││││└─┐ │ ├─┤│  ├─┤ │ ││ ││││"
-    echo "┴┘└┘└─┘ ┴ ┴ ┴┴─┘┴ ┴ ┴ ┴└─┘┘└┘"
+    echo "┴┘└┘└─┘ ┴ ┴ ┴┴─┘┴ ┴ ┴└─┘┘└┘"
     echo "by ghostkernel"
 }
 
@@ -123,12 +123,12 @@ case "$SHELL_NAME" in
         add-zsh-hook chpwd chpwd
         ;;
     bash)
-        PROMPT_COMMAND="chpwd; $PROMPT_COMMAND"
-        export PROMPT_COMMAND
+        PROMPT_COMMAND='chpwd;'"${PROMPT_COMMAND:-:}"
         ;;
     fish)
         function fish_prompt
             chpwd
+            command fish_prompt
         end
         ;;
 esac
