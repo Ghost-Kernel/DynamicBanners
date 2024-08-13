@@ -15,10 +15,41 @@ show_banner
 INSTALL_DIR=$(dirname "$(realpath "$0")")
 
 # Diretórios de banners (incluindo o de abertura de terminal)
-BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocuments" "bannerdownloads" "bannertemplates" "bannermusic" "bannervideos")
+BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocuments" "bannerdownloads" "bannertemplates" "bannermusic" "bannervideos" "bannerpublic")
 
-# Adicionar a configuração ao .zshrc
-ZSHRC_FILE="$HOME/.zshrc"
+# Função para detectar o shell padrão
+detect_shell() {
+    SHELL_PATH=$(getent passwd "$USER" | cut -d: -f7)
+    SHELL_NAME=$(basename "$SHELL_PATH")
+    echo "$SHELL_NAME"
+}
+
+# Função para escolher o arquivo de configuração baseado no shell
+select_config_file() {
+    SHELL_NAME="$1"
+    case "$SHELL_NAME" in
+        bash)
+            CONFIG_FILE="$HOME/.bashrc"
+            ;;
+        zsh)
+            CONFIG_FILE="$HOME/.zshrc"
+            ;;
+        fish)
+            CONFIG_FILE="$HOME/.config/fish/config.fish"
+            ;;
+        *)
+            echo "Shell $SHELL_NAME não suportado."
+            exit 1
+            ;;
+    esac
+    echo "$CONFIG_FILE"
+}
+
+# Detectar o shell padrão do usuário
+SHELL_NAME=$(detect_shell)
+CONFIG_FILE=$(select_config_file "$SHELL_NAME")
+
+# Adicionar a configuração ao arquivo de configuração do shell
 CONFIG_STRING='
 # Configuração do DynamicBanners
 SCRIPT_DIR='"$INSTALL_DIR"'
@@ -29,6 +60,7 @@ BANNER_DOWNLOADS_DIR="$SCRIPT_DIR/bannerdownloads"
 BANNER_TEMPLATES_DIR="$SCRIPT_DIR/bannertemplates"
 BANNER_MUSIC_DIR="$SCRIPT_DIR/bannermusic"
 BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
+BANNER_PUBLIC_DIR="$SCRIPT_DIR/bannerpublic"
 
 # Função para exibir um banner aleatório
 function display_random_banner() {
@@ -70,6 +102,9 @@ function chpwd() {
         "Videos")
             local banner_dir="$BANNER_VIDEOS_DIR"
             ;;
+        "Public")
+            local banner_dir="$BANNER_PUBLIC_DIR"
+            ;;
         *)
             return
             ;;
@@ -81,15 +116,30 @@ function chpwd() {
     fi
 }
 
-autoload -U add-zsh-hook
-add-zsh-hook chpwd chpwd
+# Adicionar hooks conforme o shell
+case "$SHELL_NAME" in
+    zsh)
+        autoload -U add-zsh-hook
+        add-zsh-hook chpwd chpwd
+        ;;
+    bash)
+        PROMPT_COMMAND="chpwd; $PROMPT_COMMAND"
+        ;;
+    fish)
+        function fish_prompt
+            chpwd
+            command fish_prompt
+        end
+        ;;
+esac
 '
 
-if grep -q "DynamicBanners" "$ZSHRC_FILE"; then
-    echo "Configuração já existe em $ZSHRC_FILE"
+# Verificar se a configuração já existe no arquivo de configuração do shell
+if grep -q "DynamicBanners" "$CONFIG_FILE"; then
+    echo "Configuração já existe em $CONFIG_FILE"
 else
-    echo "$CONFIG_STRING" >> "$ZSHRC_FILE"
-    echo "Configuração adicionada ao $ZSHRC_FILE"
+    echo "$CONFIG_STRING" >> "$CONFIG_FILE"
+    echo "Configuração adicionada ao $CONFIG_FILE"
 fi
 
 # Criar diretórios de banners (incluindo o de inicialização)
@@ -100,4 +150,4 @@ for dir in "${BANNER_DIRS[@]}"; do
     fi
 done
 
-echo "Obrigado por baixar DynamicBanners. Por favor, reinicie o terminal ou execute 'source ~/.zshrc' para aplicar as alterações."
+echo "Obrigado por baixar DynamicBanners. Por favor, reinicie o terminal ou execute 'source $CONFIG_FILE' para aplicar as alterações."
