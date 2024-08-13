@@ -63,7 +63,7 @@ BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
 BANNER_PUBLIC_DIR="$SCRIPT_DIR/bannerpublic"
 
 # Função para exibir um banner aleatório
-function display_random_banner() {
+display_random_banner() {
     local banner_dir=$1
     if [ -d "$banner_dir" ]; then
         local banner_file=$(ls "$banner_dir"/*.txt 2>/dev/null | shuf -n 1)
@@ -80,7 +80,7 @@ if [ -z "$BANNER_SHOWN" ]; then
 fi
 
 # Função para exibir banners ao mudar de diretório
-function chpwd() {
+chpwd() {
     local dir_name=$(basename "$PWD")
     
     case "$dir_name" in
@@ -128,7 +128,6 @@ case "$SHELL_NAME" in
     fish)
         function fish_prompt
             chpwd
-            command fish_prompt
         end
         ;;
 esac
