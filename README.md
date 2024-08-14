@@ -1,3 +1,15 @@
+==news==
+
+* foi adicionado a versao e portabilidade pra sistemas bash, que e identificado automaticamente ao iniciar o instalador.
+
+* foi adicionado uma portabilidade pra sistemas com os diretorios em lingua portuguesa.
+
+* foi adicionado um desinstalador universal.
+
+* foi adicionado um instalador novo que ao inves de injetar o codigo diretamente, primeiro identifica a versao do shell do sistema operacional pra acionar o codigo compativel, alem de remover os codigos que nao tem portabilidade no sistema.
+ 
+========
+
 #DynamicBanners
 
 DynamicBanners is a banner management program for Zsh terminals, designed to add banners to the main directories of the Linux operating system. The program allows you to add one or more banners to each directory and randomly chooses which banner to display, providing a dynamic and variable appearance to your terminal. It is ideal for those looking for visual modifications or to make it easier to view the current directory.
@@ -28,21 +40,16 @@ nano ~/.zshrc
 
 The program code is added to the end of this file.
 
-#In Development
-
-Currently, the program is developed for Kali Linux, but it is compatible with systems using the Zsh shell. In the future, I plan to port the program to Bash and add a Linux distribution identifier to the installer to ensure correct installation on different distributions.
-
 
 #portugues
 #DynamicBanners 
-
 
 DynamicBanners é um programa de gerenciamento de banners para terminais Zsh, desenvolvido para adicionar banners aos principais diretórios do sistema operacional Linux. O programa permite adicionar um ou mais banners a cada diretório e escolhe aleatoriamente qual banner exibir, proporcionando uma aparência dinâmica e variável ao seu terminal. É ideal para quem busca modificações visuais ou para facilitar a visualização do diretório atual.
 
 #Manual
 
 
-Após clonar o repositório, você encontrará dois scripts: um para instalação e outro para remoção.
+Após clonar o repositório, você encontrará 4 scripts: 1 para instalação 2 pra injetar o codigo e 1 para remoção.
 
 Para instalar o programa, execute o instalador com um dos seguintes comandos:
 
@@ -53,7 +60,7 @@ ou
 
 ./install.sh
 
-O script de instalação criará os diretórios necessários para os banners e adicionará o código necessário ao seu arquivo .zshrc.
+O script de instalação criará os diretórios necessários para os banners e adicionará o código necessário ao seu arquivo de inicializaçao do shell, alem de remover o injetavel de shells incompativeis.
 
 Após a instalação, os diretórios de banners estarão localizados no mesmo diretório onde o instalador foi executado. Adicione os banners no formato de arquivos .txt nos diretórios correspondentes.
 
@@ -62,13 +69,8 @@ O diretório bannerstartup é o diretório de inicialização do terminal. Ao ad
 #Desinstalação
 
 
-O programa inclui um desinstalador automático que pode ser executado da mesma forma que o instalador. O desinstalador removerá todos os diretórios criados. Certifique-se de salvar todos os banners em outro local antes de usar o script de desinstalação. O desinstalador também removerá o código adicionado ao .zshrc. Caso apareçam mensagens de erro após a desinstalação, verifique se há restos de código no final do arquivo .zshrc digitando:
+O programa inclui um desinstalador univeral automático que pode ser executado da mesma forma que o instalador. O desinstalador removerá todos os diretórios criados. Certifique-se de salvar todos os banners em outro local antes de usar o script de desinstalação. O desinstalador também removerá o código adicionado ao arquivo de icicializaçao do terminal. Caso apareçam mensagens de erro após a desinstalação, verifique se há restos de código no final do arquivo de inicializaçao do shell digitando:
 
-nano ~/.zshrc
+nano ~/.zshrc ou nano ~/.bashrc dependendo do shell da sua distribuiçao.
 
 O código do programa é adicionado ao final deste arquivo.
-
-#Em Desenvolvimento
-
-
-Atualmente, o programa foi desenvolvido para Kali Linux, mas é compatível com sistemas que utilizam o shell Zsh. No futuro, pretendo portar o programa para Bash e adicionar um identificador de distribuição Linux no instalador para garantir a instalação correta em diferentes distribuições.
