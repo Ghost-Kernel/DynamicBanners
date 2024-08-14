@@ -34,7 +34,7 @@ BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
 function display_random_banner() {
     local banner_dir=$1
     if [ -d "$banner_dir" ]; then
-        local banner_file=$(ls "$banner_dir"/*.txt 2>/dev/null | shuf -n 1)
+        local banner_file=$(find "$banner_dir" -type f -name "*.txt" 2>/dev/null | shuf -n 1)
         if [ -n "$banner_file" ]; then
             cat "$banner_file"
         fi
