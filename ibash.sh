@@ -14,7 +14,7 @@ show_banner
 # Diretório onde o script está localizado
 INSTALL_DIR=$(dirname "$(realpath "$0")")
 
-# Diretórios de banners (incluindo o de abertura de terminal)
+# Diretórios de banners
 BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocumentos" "bannerdownloads" "bannermodelos" "bannermusic" "bannervideos")
 
 # Adicionar a configuração ao .bashrc
@@ -29,6 +29,10 @@ BANNER_DOWNLOADS_DIR="$SCRIPT_DIR/bannerdownloads"
 BANNER_TEMPLATES_DIR="$SCRIPT_DIR/bannermodelos"
 BANNER_MUSIC_DIR="$SCRIPT_DIR/bannermusic"
 BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
+
+# Inicializar LAST_DIR e BANNER_SHOWN
+export LAST_DIR=""
+export BANNER_SHOWN=""
 
 # Função para exibir um banner aleatório
 function display_random_banner() {
@@ -91,7 +95,7 @@ else
     echo "Configuração adicionada ao $BASHRC_FILE"
 fi
 
-# Criar diretórios de banners (incluindo o de inicialização)
+# Criar diretórios de banners
 for dir in "${BANNER_DIRS[@]}"; do
     if [ ! -d "$INSTALL_DIR/$dir" ]; then
         mkdir "$INSTALL_DIR/$dir"
