@@ -15,7 +15,7 @@ show_banner
 INSTALL_DIR=$(dirname "$(realpath "$0")")
 
 # Diretórios de banners (incluindo o de abertura de terminal)
-BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocuments" "bannerdownloads" "bannertemplates" "bannermusic" "bannervideos")
+BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocuments" "bannerdownloads" "bannertemplates" "bannermusic" "bannervideos" "bannerpublico" "bannerdesktop")
 
 # Adicionar a configuração ao .zshrc
 ZSHRC_FILE="$HOME/.zshrc"
@@ -29,6 +29,8 @@ BANNER_DOWNLOADS_DIR="$SCRIPT_DIR/bannerdownloads"
 BANNER_TEMPLATES_DIR="$SCRIPT_DIR/bannertemplates"
 BANNER_MUSIC_DIR="$SCRIPT_DIR/bannermusic"
 BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
+BANNER_PUBLICO_DIR="$SCRIPT_DIR/bannerpublico"
+BANNER_DESKTOP_DIR="$SCRIPT_DIR/bannerdesktop"
 
 # Função para exibir um banner aleatório
 function display_random_banner() {
@@ -69,6 +71,12 @@ function chpwd() {
             ;;
         "Videos")
             local banner_dir="$BANNER_VIDEOS_DIR"
+            ;;
+        "Public")
+            local banner_dir="$BANNER_PUBLICO_DIR"
+            ;;
+        "Desktop")
+            local banner_dir="$BANNER_DESKTOP_DIR"
             ;;
         *)
             return

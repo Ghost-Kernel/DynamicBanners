@@ -14,11 +14,19 @@ show_banner
 # Diretório onde o script está localizado
 INSTALL_DIR=$(dirname "$(realpath "$0")")
 
-# Identificar o shell padrão do sistema
-SHELL_NAME=$(basename "$SHELL")
-
 # Diretórios de banners
 BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocuments" "bannerdownloads" "bannertemplates" "bannermusic" "bannervideos" "bannerpublico" "bannerdesktop")
+
+# Criar diretórios de banners
+for dir in "${BANNER_DIRS[@]}"; do
+    if [ ! -d "$INSTALL_DIR/$dir" ]; then
+        mkdir "$INSTALL_DIR/$dir"
+        echo "Criado diretório $INSTALL_DIR/$dir"
+    fi
+done
+
+# Identificar o shell padrão do sistema
+SHELL_NAME=$(basename "$SHELL")
 
 # Função para exibir um banner aleatório
 function display_random_banner() {
@@ -58,7 +66,7 @@ fi
 # Função para exibir banners ao mudar de diretório
 function check_directory() {
     local dir_name=\$(basename \"\$PWD\")
-    
+
     case \"\$dir_name\" in
         \"Pictures\"|\"Imagens\")
             local banner_dir=\"\$BANNER_PICTURES_DIR\"
@@ -88,7 +96,7 @@ function check_directory() {
             return
             ;;
     esac
-    
+
     if [ -n \"\$banner_dir\" ] && [ \"\$LAST_DIR\" != \"\$PWD\" ]; then
         display_random_banner \"\$banner_dir\"
         LAST_DIR=\"\$PWD\"
@@ -133,7 +141,7 @@ fi
 # Função para exibir banners ao mudar de diretório
 function chpwd() {
     local dir_name=\$(basename \"\$PWD\")
-    
+
     case \"\$dir_name\" in
         \"Pictures\"|\"Imagens\")
             local banner_dir=\"\$BANNER_PICTURES_DIR\"
@@ -163,7 +171,7 @@ function chpwd() {
             return
             ;;
     esac
-    
+
     if [ -n \"\$banner_dir\" ] && [ \"\$LAST_DIR\" != \"\$PWD\" ]; then
         display_random_banner \"\$banner_dir\"
         LAST_DIR=\"\$PWD\"
@@ -184,6 +192,4 @@ add-zsh-hook chpwd chpwd
     fi
 fi
 
-done 
-
-echo "obrigado por baixar DynamicBanners, para aplicar as alteraçoes reinicie o terminal."
+echo "Obrigado por baixar DynamicBanners. Por favor, reinicie o terminal ou execute 'source ~/.bashrc' para aplicar as alterações."

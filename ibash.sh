@@ -15,7 +15,7 @@ show_banner
 INSTALL_DIR=$(dirname "$(realpath "$0")")
 
 # Diretórios de banners
-BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocumentos" "bannerdownloads" "bannermodelos" "bannermusic" "bannervideos")
+BANNER_DIRS=("bannerstartup" "bannerpictures" "bannerdocumentos" "bannerdownloads" "bannermodelos" "bannermusic" "bannervideos" "bannerpublico" "bannerdesktop")
 
 # Adicionar a configuração ao .bashrc
 BASHRC_FILE="$HOME/.bashrc"
@@ -29,7 +29,8 @@ BANNER_DOWNLOADS_DIR="$SCRIPT_DIR/bannerdownloads"
 BANNER_TEMPLATES_DIR="$SCRIPT_DIR/bannermodelos"
 BANNER_MUSIC_DIR="$SCRIPT_DIR/bannermusic"
 BANNER_VIDEOS_DIR="$SCRIPT_DIR/bannervideos"
-
+BANNER_PUBLICO_DIR="$SCRIPT_DIR/bannerpublico"
+BANNER_DESKTOP_DIR="$SCRIPT_DIR/bannerdesktop"
 # Inicializar LAST_DIR e BANNER_SHOWN
 export LAST_DIR=""
 export BANNER_SHOWN=""
@@ -68,11 +69,17 @@ function check_directory() {
         "Templates"|"Modelos")
             local banner_dir="$BANNER_TEMPLATES_DIR"
             ;;
-        "Music"|"Música")
+        "Music"|"Músicas")
             local banner_dir="$BANNER_MUSIC_DIR"
             ;;
         "Videos"|"Vídeos")
             local banner_dir="$BANNER_VIDEOS_DIR"
+            ;;
+            "Public"|"Público)
+            local banner_dir="$BANNER_PUBLICO_DIR"
+            ;;
+        "Desktop"|"'Área de trabalho'")
+            local banner_dir="$BANNER_DESKTOP_DIR"
             ;;
         *)
             return
